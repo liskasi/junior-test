@@ -1,6 +1,8 @@
 <?php
 
-namespace src\classes;
+namespace src\Models;
+
+use src\Models\DBConnect\DB;
 
 abstract class Product
 {
@@ -10,13 +12,6 @@ abstract class Product
     protected $price;
     protected $productType;
     protected $attribute;
-
-    //getters and setters here.... https://www.giuseppemaccario.com/how-to-build-a-simple-php-mvc-framework/
-    public function getId()
-    {
-        return $this->id;
-    }
-    //...
 
     abstract protected function insert($fields);
 
@@ -29,7 +24,8 @@ abstract class Product
 
     public function insertTest($name)
     {
-        $query = "INSERT INTO `test`(`name`) VALUES (" . $name . ")";
-        echo $this->pdo->exec($query);
+        $db = DB::getInstance();
+        $query = "INSERT INTO test (name) VALUES ('" . $name . "')";
+        $stmt = $db->exec($query);
     }
 }

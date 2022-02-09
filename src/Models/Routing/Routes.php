@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Routing;
+namespace src\Models\Routing;
 
 interface Routes
 {

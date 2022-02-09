@@ -1,12 +1,13 @@
 <?php
-require_once realpath("../vendor/autoload.php");
-use src\models\Book;
-$dvd = new Book();
+try {
+    require_once realpath("../vendor/autoload.php");
 
-?>
-
-<form action="/Book/insertTest" method="post">
-    <label name="sku">Insert you name</label>
-    <textarea name="sku"></textarea>
-    <input type="submit" name="submit" value="Save">
-</form>
+    $app = new \src\Models\Routing\Application();
+    $app->run();
+}
+catch (PDOException $e)
+{
+    $output = 'Database error: ' . $e->getMessage() . ' in ' .
+        $e->getFile() . ':' . $e->getLine();
+    echo $output;
+}
