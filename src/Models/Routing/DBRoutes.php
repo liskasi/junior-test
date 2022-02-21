@@ -26,6 +26,12 @@ class DBRoutes implements Routes
         $bookController = new BookController();
 
         $routes = [
+            '/delete' => [
+                'POST'=> [
+                    'controller' => $bookController,
+                    'action' => 'delete'
+                ]
+            ],
             '/test' => [
               'GET' => [
                   'controller' => $pageController,
@@ -38,19 +44,19 @@ class DBRoutes implements Routes
                   'action' => 'insertTest'
               ]
             ],
-            '/add-product/DVD' => [
+            '/add-product/dvd' => [
                 'POST' => [
                     'controller' => $dvdController,
                     'action' => 'insertProduct'
                 ]
             ],
-            '/add-product/Book' => [
+            '/add-product/book' => [
                 'POST' => [
                     'controller' => $bookController,
                     'action' => 'insertProduct'
                 ]
             ],
-            '/add-product/Furniture' => [
+            '/add-product/furniture' => [
                 'POST' => [
                     'controller' => $furnitureController,
                     'action' => 'insertProduct'
@@ -65,13 +71,13 @@ class DBRoutes implements Routes
             '/add-product/cancel' => [
                 'GET' => [
                     'controller' => $pageController,
-                    'action' => 'cancel'
+                    'action' => 'home'
                 ]
             ],
             '/' => [
                 'GET' => [
-                    'controller' => $pageController,
-                    'action' => 'home'
+                    'controller' => $dvdController,
+                    'action' => 'getProducts'
                 ]
             ]
         ];
@@ -90,9 +96,11 @@ class DBRoutes implements Routes
 
     public function resolve()
     {
+        //var_dump($this->request);
         $path = $this->request->getPath();
         $method = $this->request->getMethod();
         $routes = $this->getRoutes();
+        $data = $this->request->getBody();
         $callback = $routes[$path][$method] ?? false;
 
         if ($callback === false)
@@ -103,16 +111,23 @@ class DBRoutes implements Routes
 
         $controller = $routes[$path][$method]['controller'];
         $action = $routes[$path][$method]['action'];
-        $page = $controller->$action();
-
-        if (isset($page['variables'])) {
-            $output = $this->loadTemplate($page['template'], $page['variables']);
+        if(!$data)
+        {
+            $page = $controller->$action();
         }
-        else {
-            $output = $this->loadTemplate($page['template']);
+        else
+        {
+            $page = $controller->$action($data);
         }
 
-        echo $this->loadTemplate('layout.html.php', ['output' => $output]);
+//        if (isset($page['variables'])) {
+//            $output = $this->loadTemplate($page['template'], $page['variables']);
+//        }
+//        else {
+//            $output = $this->loadTemplate($page['template']);
+//        }
+//
+//        echo $this->loadTemplate('layout.html.php', ['output' => $output]);
 
     }
 }

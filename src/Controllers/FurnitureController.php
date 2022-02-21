@@ -6,11 +6,11 @@ use src\Models\Routing\Routes;
 
 class FurnitureController extends ProductController
 {
-    public function insertProduct($fields, Routes $routes)
+    public function insertProduct($fields)
     {
-        $book = new Furniture();
-        $book->insert($fields);
-        header();
+        $furniture = new Furniture();
+        $furniture->prepareInsert($fields);
+        var_dump('Success');
     }
 
 }

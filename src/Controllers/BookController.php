@@ -6,10 +6,11 @@ use src\Models\Routing\Routes;
 
 class BookController extends ProductController
 {
-    public function insertProduct($fields, Routes $routes)
+    public function insertProduct($fields)
     {
         $book = new Book();
-        $book->insert($fields);
+        $book->prepareInsert($fields);
+        var_dump('Success');
     }
 
     public function insertTest()

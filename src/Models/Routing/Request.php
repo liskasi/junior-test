@@ -19,4 +19,11 @@ class Request
     {
         return $_SERVER['REQUEST_METHOD'];
     }
+
+    public function getBody()
+    {
+        $content = trim(file_get_contents("php://input"));
+        $decoded = json_decode($content, true);
+        return $decoded;
+    }
 }

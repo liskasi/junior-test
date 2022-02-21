@@ -6,5 +6,4 @@ class DB
 {
     use SingletonTrait;
 
-
 }

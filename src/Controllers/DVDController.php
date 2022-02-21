@@ -6,12 +6,11 @@ use src\Models\Routing\Routes;
 
 class DVDController extends ProductController
 {
-    public function insertProduct($fields, Routes $routes)
+    public function insertProduct($fields)
     {
-        $book = new DVD();
-        $book->insert($fields);
-        header();
-
+        $dvd = new DVD();
+        $dvd->prepareInsert($fields);
+//        header('http://localhost:3000/');
     }
 
 }
