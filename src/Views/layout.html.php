@@ -1,2 +1,0 @@
-<p>LAYOUT</p>
-<?=$output?>
